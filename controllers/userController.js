@@ -18,7 +18,7 @@ export const createUser = async (req, res) => {
     });
 
     return res.status(201).json({
-      success: `user with ${username} is created`,
+      success: `user with username:${username} is created`,
     });
   } catch (error) {
     return res.sendStatus(500);
@@ -43,7 +43,7 @@ export const deleteUser = async (req, res) => {
 
     if (!user) return res.sendStatus(204);
 
-    user.deleteOne({ _id: id });
+    await user.deleteOne({ _id: id });
     return res.sendStatus(204);
   } catch (error) {
     console.log(error);
@@ -51,3 +51,24 @@ export const deleteUser = async (req, res) => {
     return res.sendStatus(500);
   }
 };
+
+export const updateUsername = async (req, res) => {
+  const user = await Users.findOne({ _id: req.params.id ?? "" });
+  if (!user) {
+    return res.status(404).json({ error: "not Found" });
+  }
+  const { username } = req.body;
+  if (user.username === username)
+    return res
+      .status(409)
+      .json({ error: `User with username ${username} already exists` });
+
+
+      user.username = username
+
+    const updatedUser= await user.save()
+
+     return res.status(201).json({"success":`Your username is now ${updatedUser.username}`})
+};
+
+
