@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import userRouter from './routes/users.js'
+import productRouter from './routes/product.js'
 const app = express();
 
 main();
@@ -11,6 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users",userRouter)
+app.use("/products",productRouter)
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
