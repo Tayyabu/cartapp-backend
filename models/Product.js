@@ -7,15 +7,15 @@ const productSchema = new mongoose.Schema({
     unique: true,
   },
   price: {
-    type:Number,
+    type: Number,
     min: 0,
     default: 0,
     required: true,
   },
-
+  fileUrls: [String],
   category: {
     type: String,
-    required:true
+    required: true,
   },
   createdAt: {
     type: Date,

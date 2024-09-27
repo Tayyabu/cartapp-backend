@@ -28,8 +28,7 @@ export const createUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const users = await Users.find().select("username").lean();
-    console.log(users);
-
+   
     return res.json(users);
   } catch (error) {
     return res.sendStatus(500);
